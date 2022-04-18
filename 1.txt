@@ -1,0 +1,872 @@
+About perl
+
+1.scalar 
+2.array
+3.hash
+
+4.operators
+5.conditional statements
+6.looping statements
+
+7.fileHandling
+8.subroutine ( user defined function )
+
+9.Reference 
+10.Complex DS(Array&Hash)
+
+11.module
+12.package 
+13.oops style 
+14.cpan - perl libs 
+15.perl case studies 
+	
+	perl - DB
+	  |-- network
+	  |-- python/ruby/shellscript
+16.perl CGI
+---------------------------------------------------------------
+
+shellscript	Vs	 perl				Vs	python
+-----------		-------					--------
+command			function				function()
+ex:echo			ex:print()				
+   grep			   grep()
+
+can't write		we can oops style			we can use oops style
+oops style							
+								functional style
+we can run		we can run os command 			|
+os command 		directly				portable script
+directly							
+								to run os command
+unix like os		portable any os can run perl		in python use (import module)
+only								(ex: os,subprocess)
+================	===========================
+
+
+Basic C + shellscript + sed + awk ==> Perl 
+------------------------------------- _____
+
+
+=============================================================================================
+
+New to perl (or) new to programming ?
+
+STEP 1: understand the topic definition ? (what is _______?)
+
+STEP 2: understand the topic syntax? 
+
+STEP 3: Refer existing examples
+
+STEP 4: Exercise 
+
+
+int,float,string,bool,undef
+
+10
+10.0
+"data"
+
+10 Vs "10"
+--     --
+
+variable
+--------
+ |->namespace (or) placeholder - it's holding a value
+
+1.scalar => $variablename = SingleValue;
+
+		$no=10;			->	$no | 10 | 0x12345
+		$cost=13234.34;
+		$var="data";
+
+2.array => Collection of scalars (data only)
+   |
+   @arrayname=()
+
+3. Hash =>Collection of scalars (key/value pair)
+  -----
+    |
+    %hashname={}
+
+
+print() 
+
+in perl - function() - () symbol is optional
+
+print("Hello"); -> Hello
+
+print "Hello"; -> Hello
+
+print 45; ->45
+
+print 4.23; ->4.23
+
+------------------------------------------------------------------------------------------------
+$variableName = value;
+
+
+
+write a perl script 
+declare and initialize value - about file details
+
+ex: /etc/passwd ASCII/TEXT 4KB root rw-rw-- etc.,
+   ------------ ========== --- ---- =======
+
+
+----------------------------------------------------------------------------------------------
+
+Keyboard(<STDIN>)-------<----perl script----------->-----------Display to monitor(STDOUT)
+		    <>				print()
+			
+ <>
+ <STDIN>	
+  |
+  |__ p1.log{Enter} ==> p1.log\n
+	    -------
+		|
+		\n
+------------------------------------------------------------------------------------------------
+
+chomp("data\n") -> "data"
+|
+remove \n chars at the end of string.
+
+
+
+     1	print "Enter N value:";
+     2	$n=<>;   ===================> $n="56\n"
+     3	print $n;
+     4	chomp($n); --> remove \n 
+     5	print $n;-->56
+apelix@krosumlabs:~$ perl p7.pl 
+Enter N value:56{Enter}
+56
+56apelix@krosumlabs:~$ 
+-----------------------------------------------------------------------------------------
+
+print("server1\nserver2\nserver3\nserver4\n");
+
+print("server1{Enter}
+server2{enter}
+server3{enter}
+server4{enter}
+");
+-------------------------------------------------------------
+perl support int/float arithmetic operations
++ - * / %
+
+
+Write a perl script 
+
+step 1: read a disk partition name from <STDIN>
+
+step 2: read a another - disk partition name from <STDIN>
+|
+step 3: read both disk partition Size from <STDIN>
+|
+step 4: calculate sum of two parition size 
+|
+step 5: using print() - display each partition name - size
+				total partition size 
+
+	Note: use single print()
+---------------------------------------------------------------
+
+Expected result:-
+
+Enter a partition name:/dev/xvda1
+Enter /dev/xvda1 Size: 150
+
+Enter another partition name:/dev/xvda2
+Enter /dev/xvda2 Size:250
+
+/dev/xvda1	150GB
+--------------------------
+/dev/xvda2	250GB
+---------------------------
+Total		400GB
+---------------------------
+---------------------------------------------------------------
+
+Relational operators
+--------------------
+	|
+	|
+ -------------------
+ |		    |
+ |		    |
+int/float 0-9	   string "a-zA-Z0-9spacespecial"
+==		   -------------------------------
+!=			eq
+<			ne
+<=			lt
+>			le
+>=			gt
+			ge
+
+$va="abc";	$n=56;
+$vb="ayz";	$m=69;
+
+$va eq $vb 	$n >50
+		$m <60
+
+"abc" eq "abc"    150 == 150
+      --	      --
+       |	       |
+   string	     number
+
+
+
+test the condition - if condition is matched ->1 (bool value)
+				   |
+				 not-matched ->undef 
+
+
+
+in programming any expression returns bool value - we can use conditional statements
+
+Conditional statements
+-----------------------
+->Code block - block will execute only one time.
+			  -------
+			   |
+			 based on the condition
+
+if statement
+---------------
+1.if only 
+2.if..else style 
+3.if..elsif 
+
+Syntax:-
+--------
+if only style
+
+if(condition){
+	True block
+}
+
+Syntax:-
+----------
+if..else style
+
+if(condition){
+	True block
+}else{
+	False block
+}
+
+
+syntax:-
+--------
+if (condition1){
+	True block - 1
+}elsif(condition2){
+	True block -2 
+}elsif(condition3){
+	True block-3
+}elsif(condition4){
+	True block-4
+}.....
+}elsif(conditionN){
+	...
+}else{
+	False block
+}
+-------------------------------------------------------------------------------
+
+logical operators
+-------------------
+ |
+ |->In Single Conditional statement,test more than one condition //we can use logical operators
+ |
+
+ && 	||	!
+
+
+logical &&
+===========
+Condition1	Condition2	Result
+True		True		True
+True		False		False
+False		True		False
+False		False		False
+
+test a port number - range 501-599
+|
+$port >500 --->(1)
+
+$port <600 --->(2)
+
+$port >500 && $port <600
+==========    ===========
+
+if($port >500 && $port <600){
+	....
+}else{
+	....
+}
+
+
+
+logical ||
+===========
+Condition1	Condition2	Result
+True		True		True
+True		False		True
+False		True		True
+False		False		False
+
+test a input city name is city1 (or) city2 //anyone name is matched - True
+
+print("Enter a city name:");
+chomp($city=<>);
+
+if($city eq "city1" || $city eq "city2"){
+	...
+}else{
+	...
+}
+
+------------------------------------------------------------------------------------
+
+! not 
+opp testing 
+
+condition say True -> ! ->False
+condition say False -> ! ->True
+
+if !(condition){
+	...
+}else{
+	..
+}
+
+-----------------------------------------------------------------------------------------
+
+Write a perl script
+-------------------
+
+step 1: read a port number from <STDIN>
+|
+step 2: test input port number range 501-599   
+			             --------
+			step 3:	initialize app name is "testApp"
+			|
+			step 4: display port number and App name
+
+Write a perl script
+-----------------------
+Step 1: read a shell name from <STDIN>
+|
+Step 2: test input shell name is bash or not
+				 |
+			     initialize a profile filename "/etc/bashrc"
+					
+        test input shell name is ksh or zsh any one name is matched 
+				  |
+				initialize a profile filename "/etc/kshrc"
+				  
+	test input shell name is sh or not
+				 |
+				initialize a profile filename "/etc/shrc"
+
+step 3: default shell name is /bin/nologin  default profile filename /etc/profile
+			      ------------			     -------------
+
+step 4: display shell name & profile file name.
+------------------------------------------------------------------------------------------
+ to run os commands in perl script
+
+ 1.system("command") ->statusCode - we can't store command result to localvariable 
+ |
+ 2.using backquotes `` -> $variable=`command` - we can store command result to localvariable
+
+ 
+ test - total no.process count is above 100 - message .... count value
+				  below 100 - message ... count value
+
+ ps -e|wc -l
+ ------------
+ 
+
+ test login name is root (or) not
+ 		     |
+		     |
+		 read a package from <STDIN>
+		 |
+		 test package is available or not (rpm -q <packagename>) 
+		 			|	|
+				    .....	yum install package <== system()
+						|
+						display status
+
+
+--------------------------------------------------------------------------------------------------
+ Write a perl script
+
+ -> read a shell name from <STDIN>
+	   |
+	test input shell is bash or ksh //anyone shell name is matched 
+			- initialize profile file - /etc/bashrc
+			
+	test input shell is sh 
+			     |
+			test total no.of sh shell count
+						   |
+						count is above 5 - display list of .sh shells
+			|
+			test total no.of sh shell count is below 5 - display count value
+
+	default shell - /bin/nologin
+		|
+		filename - /etc/profile
+
+  -> display shell and file name
+
+----------------------------------------------------------------------------------------------------------
+
+ File test operators
+ --------------------
+   |->file types
+   |
+   |->file mode 
+
+
+
+  file types
+ -------------
+  1.Reg.file (or) ordinary file  -f
+  |
+  2.Directory file               -d
+  |
+  3.link file (or) symlink (or) softlink  -h (or) -l
+  |
+  4.char type file ---> -c 
+  |
+  5.block type file  ---> -b 
+  |
+  6.named pipe ->fifo file -> -p
+
+  7.socket file -> -S 
+
+
+ -e existing or not 
+
+
+ test file is reg.file or not ?
+
+ chomp($fname=<>);
+
+ if (-f $fname){
+	.....
+ }else{
+	....
+ }
+ 
+ write a perl script 
+ 
+step 1: read a filename from<STDIN>
+step 2: test input file is exists ing or not
+			       |
+			 test file is reg.file or not
+			 		|
+					system("ls -l ..")
+			 |
+			 test file is directory file or not
+					|
+					system("ls -ld filename")
+			 |
+			...file is exists - not a reg/directory file
+
+------------------------------------------------------------------------------------------
+
+Write a perl script 
+
+step 1: read a directory name <STDIN>
+|				-d
+step 2: test input directory is exists or not
+				|	  |
+				|	 (A)
+				|
+				display directory details
+step 3:  (A)
+	  |
+	using system() + mkdir command - create a directory - display directory details.
+
+---------------------------------------------------------------------------------------------
+
+string
+-------
+"string1"."string2" => string1string2
+
+
+"string1"xn 
+	  |->repeated n times
+	  |
+	 (int)
+ex: "Hello"x5 => HelloHelloHelloHelloHello
+		 --------------------------
+------------------------------------------------------------------------------------------------
+unless statement
+----------------
+ - conditional statement 
+    |
+  code block will execute only onetime
+  
+ - opp. if statement 
+	-----------
+
+unless(condition){
+	....
+}else{
+	...
+}		
+
+if(conditon){	<== test the condition, if condition is True - True block will execute
+	True block				|
+}else{						is False
+	False block				    |
+}			-----<----------------------
+
+
+unless(condition){  <== test the condition, if condition is True - else block 
+	False block				|
+}else{					----<---False block
+	True block
+}		
+
+if (! condition) -------------same as -------- unless(condition)
+
+===================================================================================================
+
+if(condition){				if (!condition){		unless(condition){
+	True block				False block	=>		False-block
+}else{				=>	}				}
+	False block		
+}		
+
+==================================================================================================
+
+looping statements - Codeblock will execute more than one time
+------------------
+	|
+	|-> 1. Conditional style loop  - based on the bool value
+	|      ===========				
+	|
+	|-> 2. Collection style loop	- based on the no.of items
+	       ==========
+
+
+ while loop
+ ----------
+ 
+
+ Syntax:-
+ --------
+ while(condition){
+		
+	code block 
+ }
+
+ Rule 1: initialization			$i=0			$i=15
+ |
+ Rule 2: test the condition		$i<5  0 1 2 3 4		$i>10	15 14 13 12 11 
+ |						
+ Rule 3: arithmetic 			$i+1			$i-1
+
+
+ write a perl script 
+ 
+ using while loop - display cpu loadbalance result - 5times - for every 2secs delay
+ ----------------
+
+
+ for syntax:-
+ ----------- 
+
+ for(initialization;condition;++/--){
+	code block
+ }
+
+ 
+ last - like break word in other programming 
+ ----
+  
+ while(1){			for(;;){
+	....		=>		..
+ }				}
+ --------------			--------------
+ |				|
+always active			always active
+
+
+until - loop
+-----
+ -> opp.while => recap while - test a condition - True - Code block will execute
+					|
+					False - Code block won't execute
+
+ until loop - test the condition - True - code block won't execute
+			   |
+			False - Code block will execute
+ 
+	
+-----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+							    
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
