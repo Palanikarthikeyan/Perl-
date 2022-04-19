@@ -1,0 +1,599 @@
+ recap
+ -----
+ scalar - single value
+
+  |->int,float,str,bool,undef
+     --------- ===
+
+
+   string			Vs	 numbers
+   -------				 -------
+   eq ne lt le gt ge			== != < <= > >=
+
+  logical operators
+  ====================
+   && || !
+
+ if
+ unless 
+
+
+ looping statement
+ ..................
+ 1. Conditional style  - based on the bool value - while,until
+
+ 2. Collection style   - based on the no.items - for,foreach 
+				      --------
+					|->array/hash
+        
+ =================================================================================================
+
+
+ list - collection of items(different types) (or) Collection of scalars - unnamed   (list of items);
+ |
+ array - collection of items(different types) (or) Collection of scalars - named => @arr=(list of items);
+
+
+ $ename="Mr.Raj";
+
+ $eid=123;				($ename,$eid,$ecost); //list 
+
+ $ecost=135523.42;			@emp=($ename,$eid,$ecost); //array
+			
+ --------------------//scalar 
+
+
+ @var=(); <== empty array
+
+ $a=10; <== scalar value
+
+ $b=$a;
+
+ print $a; ->10
+
+ print $b; ->10
+
+
+ @A=("D1","D2");
+
+
+ @B=@A; 
+
+ print @B; -> D1,D2
+
+ $c=@A; <====
+ --
+ |--->print $c ->Size of an array-2
+
+ 
+ @emp=("Raj","e123","HR",1234.56);
+ ----
+ 
+ $a=@emp;
+
+
+ ($v1,$v2,$v3,$v4)=@emp; <== from array to list 
+
+       |---------------------|
+      ==                    ==
+ ($v1,$v2,$v3,$v4)=("Raj","e123","HR",1234.56);
+  ---	   |  ****   ---	  |    ******
+   |-------|-----------|	  |
+           |			  |
+	   |----------------------|
+
+
+  print $v1; ->Raj
+  print $v4; --------->1234.56
+
+ 
+ collection style loop
+ ---------------------
+
+ 1. foreach loop
+ ---------------
+ syntax:-
+ --------
+ foreach $variable (listofitems){
+		...
+ }
+ for $variable (listof items){
+	...
+ }
+ 
+ =======================================================================================================
+ 
+ perl array
+ -----------
+	|-> Collection of items(different types)
+	|
+	|-> index based 
+	|
+	|-> mutable - we can add/modify/delete nth data
+	|
+	|-> @ <== array symbol
+
+
+	
+  @arr=(item1,item2,item3,item4,item5,item6);
+        -----|-----|-----|-----|-----|-----
+	  0  |  1  |  2  |  3  |  4  |  5 <== index
+
+
+ in perl single data -> $ - single value
+
+  
+  from array - how to get single value ?
+			  -------
+			   $arrayname[index];
+
+  $arr[0]; ->item1
+
+  $arr[1]; -> item2
+
+ How to modify existing single_value?
+ 
+	$arrayname[old_index]=UpdatedValue;
+ 
+ How to add new item into an array?
+
+
+ push()
+ |
+ unshift()
+
+
+
+ How to delete exisitng item?
+
+ pop()
+ |
+ shift()
+
+ ================================================================================
+
+ Write a perl script
+
+ step 1: create an empty array - display size
+
+ |
+ step 2: using while loop - max - 5
+	
+		- read a hostname from <STDIN>
+		- append input host to an array
+
+
+
+ |
+ step 3: using foreach loop - display list of hostname
+
+ step 4: display size of an array.
+
+
+
+ @hosts=(); # empty array
+
+ print "A. Size of an array:@hosts\n";
+
+ $c=0;
+
+ while($c < 5){
+	print "Enter a hostname:";
+	chomp($hostname=<>);
+	@host.push(@hosts,$hostname);
+	$c=$c+1
+ end
+
+ foreach $var (@hosts){
+	print "$var"
+ }
+
+ -------------------------------------------------------------------------------
+ 
+
+ length(stringValue) ->int length of string
+ |
+ |
+ scalar(@array) ->int - length of array //(1)
+
+ $size=@array   length of array//(2)
+
+
+ $variable[index]; ->scalar
+ ---------=======
+           |
+ array-variable
+ 
+ $var
+ ----
+  |->this is not an array
+
+
+
+
+  @arr=("D1","D2","D3","D4");
+	 0    1    2    3  <===== index
+	-4   -3   -2   -1  <===== index
+
+ if($arr[0] eq $arr[-4]){
+	print "Yes\n";
+ }else{
+	print "No\n";
+ }
+
+ ------------------------------------------------------------------------------------------------
+ 
+
+  string(Single-scalar) -------->array(collection)
+			  
+ 
+  s1="root:x:bin:bash";			-> ("root","x","bin","bash");
+
+  s2="userA,sales,city,1200";		-> ("userA","sales","city","1200");
+
+  s3="app 456\t 42.32";			-> ("app","456","42.32");
+
+ 
+  @outputArray=split(fsep,$inputString);
+	       -----
+ ------------------------------------------------------------------------------------------------
+
+
+ root@host~]# perl p1.pl{enter}	   Vs    root@host~]# perl p1.pl DBNAME user port {Enter}
+
+ Enter a db name:				# script(p1.pl) is not active state
+		 ^^^^^				# non-interactive input - runtime inputs
+
+ # now script is running state
+ #
+ # interactive input - execution input
+
+
+ @ARGV <== builtin array variable 
+
+-----------------------------------------------------------------------------------------------------
+
+ Write a perl script 
+ 
+ using commandline - test input file is exists or not?
+
+ Validation
+ ------------
+	1. commandline args not an empty args		->	  perl file.pl 
+	2. commandline won't allows more than one input file  ->  perl file.pl f1 f2
+
+	3. commandline arg input file is not same as script file -> perl p1.pl p1.pl
+
+-----------------------------------------------------------------------------------------------------
+
+ array - Collection of ordered items(different types of items) - index based - mutable - @ 
+								 (int)	[index]
+ |
+ |
+ 
+ hash - Collection of unordered items(data - key/value)	- key based - mutable - {}
+
+ 
+ 10
+ 1.45
+ "data"
+ ----------> @arr=(10,1.45,"data");	("K1"=>10,"K2"=>1.45,"K3"=>"data")
+		
+		$arr[1]			  $h{'K1'} ->Value/KeyError 
+
+
+
+
+  $variable[index]
+  ---------
+    |_array 
+
+
+  $variable{Key}
+  ---------
+   |_hash
+
+
+ $hashname{"oldkey"}=UpdatedValue; <== modification
+
+ $hashname{"newkey"}=Value; <== adding new datato an existing hash 
+
+ ------------------------------------------------------------------------------------------------------------
+
+ Q1 Write a perl script :
+ --
+  step 1: initialize a pin number (ex: $pin=1234; )
+
+  step 2: using while loop - max limit 3
+		
+		- read a pin number from <STDIN>
+		- test input pin with existing pin(step 1)
+		
+		- display pin success - count (ex: pin is matched - 1)
+		
+  step 3: all 3 attempts failed - pin is blocked.
+
+ -----------------------------------------------------------------------
+  |
+ Q2.  step 1: create an empty array
+
+ 	      append - input details (Success/Failed) with date/time
+			-----------------------------       --------
+		|
+	choice from user - Yes =>open an array - display array details
+							 -------------
+							  pin entry details
+------------------------------------------------------------------------------
+       
+
+ Q3. @emp=("101,raj,sales,pune,1000\n","102,leo,pro,bglore,2000\n","103,anu,HR,noida,3000\n");
+      
+
+  Given array: 
+  @emp=("101,raj,sales,pune,1000\n","102,leo,pro,bglore,2000\n","103,anu,HR,noida,3000\n");
+
+  display emp name 	working city 
+  calculate sum of emp's cost - display total cost at the end of the line.
+
+
+  Expected Result
+  ---------------
+
+  Emp name is: raj	Working city: pune
+  -------------------------------------------
+  Emp name is: leo	Working city: bglore
+  -------------------------------------------
+  Emp name is: anu	Working city: noida
+  -------------------------------------------
+		    Sum of Emp's cost: 6000
+  -------------------------------------------
+		
+  @a=split(",","101,raj,sales,pune,1000\n")
+  --
+  |
+ ($eid,$ename,$edept,$city,$cost)=@a;  (or)  $eid=$a[0];
+  ----------------------------------
+		|
+		from array to list
+
+  ($eid,$ename,$edept,$city,$cost)=split(",","101,raj,sales,pune,1000\n");
+
+
+
+
+
+
+   @emp=("101,raj,sales,pune,1000\n","102,leo,pro,bglore,2000\n","103,anu,HR,noida,3000\n");
+
+ $total=0;
+ foreach $var (@emp){
+    @a=split(",",$var); 
+    ($eid,$ename,$edept,$eplace,$ecost)=@a;
+    print "Emp name:$ename\t Working City:$eplace\n";
+    $total=$total+$ecost;
+ } 
+print "-"x50,"\n";
+print "\t Sum of Emp's Cost:$total \n";
+print "-"x50,"\n";
+ 
+-----------------------------------------------------------------------------------------------
+
+	@K=keys(%hash);
+
+	@V=values(%hash);
+
+	@a=each(%hash);
+	--
+	|
+	(key,value) - current record only 
+	-----------
+
+	while(($k,$v)=each(%hash)){
+
+		...
+	}
+
+-------------------------------------------------------------------------------------------------
+
+	delete($hash_name{'key'})
+	------ =================
+	      
+        |
+	exists($hash_name{'key'}) ->True/False
+	------
+	|
+	key is exists or not
+		
+ -------------------------------------------------------------------------------------------------
+
+	
+  Write a perl script
+
+
+  step 1: create an empty hash
+
+  step 2: using while loop - 5times
+
+		read a alias name from <STDIN> (ex: host01 )
+		read a IP Address from <STDIN> (ex: 10.20.30.40)
+
+		add input details (alias / IP) to hashtable 
+
+  step 3: display key/value 
+
+  step 4: update host03 - 127.0.0.1
+		 ------   =========
+
+  step 5: display updated key/value
+
+ ---------------------------------------------------------------------------------------------
+ %host=(); # empty hash
+
+ $c=0;
+ while($c < 5){
+	
+	print "Enter a alias name:";
+	chomp($a=<>);
+	print "Enter $a IP-Address:";
+	chomp($ip=<>);
+	
+	host{$a}=$ip;
+ 	$c++;
+ }
+
+ foreach $k (keys(%hosts)){
+	print "$k\t $hosts{$k}\n";
+ }
+
+  (or)
+
+ while(($k,$v)=each(%hosts)){	
+
+	print "$k\t $v\n";
+ }
+  
+ $hosts["host03"]="127.0.0.1";
+
+ 
+
+  foreach $k (keys(%hosts)){
+	print "$k\t $hosts{$k}\n";
+ }
+
+  (or)
+
+ while(($k,$v)=each(%hosts)){	
+
+	print "$k\t $v\n";
+ }
+  
+================================================================================================================
+
+ Recap
+ ------
+ Array - Collection - ordered items - index  - mutable - [index] -> @arrayname=();
+ |
+ Hash  - Collection - unordered items - key  - mutable - {"key"} -> %hashname=();
+
+ Array				Vs				Hash
+ -----								--------
+ @a=(list of items);						%h=(K1=>V1,K2=>V2);
+
+ data - single							data - key => Value (pairs)
+
+ using existing index
+ - update a value
+
+ $arrayname[existingIndex]=UpdatedValue				$hashname{'existingkey'}=UpdatedValue;
+ -								-
+ 
+ $arrayname[index] ->Value/undef				$hashname{'key'} ->Value/undef
+
+ push(@array,newitem)						$hashname{'newkey'}=value;
+ unshift(@array,newitem)
+
+ pop(@array);							delete($hashname{'key'})
+ shift(@array);
+
+ 								keys(%hash) ->@array result
+								values(%hash) ->@array result
+								each(%hash) -> @array result
+								exists($hash{key}) ->True/False
+-----------------------------------------------------------------------------------------------------
+
+ FileHandling
+ -------------
+								print()				
+ Keyboard(<STDIN>) -------<----<>----------perlscript ------------>------- Monitor(STDOUT)
+					   __________
+						|
+						|
+					     Storage(FILE)
+
+
+  +-------------------+
+  | user: perl / appln|		open(fileHandler,"filename")
+  |---------|----------|	 |
+  | kernel: |			 kernel
+  |--------------------|	 |
+  | H/W: HardDisk      |	HD
+  |		       |
+  +--------------------+
+
+
+ 1. Read data from <STORAGE> to perlscript - display to monitor
+    ______________________________________ =====================
+
+	|
+	open(fileHandler,"inputFile");
+	
+	read a content -  <fileHandler>
+
+
+	close(fileHandler);
+	
+
+
+	open(filehandler,"inputfile");
+	
+	while($var=<filehandler>){
+		print($var); # display to monitor
+	}
+	close(filehandler);
+
+ --------------------------------------------------------------------------------------------------
+	
+	> - create a newfile , if file is already exists - all the existing content will overwrite 
+
+
+	open(wh,">resultfile")
+		 ------------
+
+	>> - append operation
+
+
+	open(wh,">>resultfile") 
+
+	print wh,"data\n";  Vs  print "data\n";
+		   |			|-------->display to monitor
+	       |-<- 			
+
+	close(wh);
+ -------------------------------------------------------------------------------------------------
+
+	3. read datafrom oneFILE ->anotherFILE ->create/write data to another file
+ 	   ---------------------
+		|
+	open(FH,"inputfile");
+
+
+	open(WH,">resultfile");
+
+	while($var=<FH>){
+
+		print WH $var;
+	}
+	close(FH);
+	close(WH);
+	-------------------------
+
+
+
+
+	
+	$var=<>;  -> $var=<STDIN>;			Vs	$var=<FH>;
+						
+	print "Hello"; -> print STDOUT "Hello";			print WH "Hello";
+				
+	
+            
+	open(FH,"inputfile") || die($!);
+				--------
+				  |->exit from script
+
+	
+ 
+	open(FH,"inputfile") || warn($!);
+				|
+				|-> display error message - won't exit from script
+=================================================================================================
