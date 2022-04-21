@@ -1,0 +1,466 @@
+ subroutine - user defined function
+ ----------
+
+
+ sub fdisplay{
+
+
+
+ }
+
+ fdisplay();
+
+ Fdisplay(); # Error - exit from script 
+
+ sub AUTOLOAD{
+	print "This is AUTOLOAD block - avoid exit state\n";
+	print $AUTOLOAD # display function name 
+ }
+ fdisplay(); # Valid Call - AUTOLOAD won't execute
+
+ Fdisplay(); # invalidCall - automaticall - AUTOLOAD block will execute 
+ ...
+ ...//then continue next section of code.
+ 
+ ==============================================================================================
+
+ =~
+ !~
+ ----//Regx operators (or) bind operators (or) match operators 
+
+ m/pattern/ <== optional Vs $inputstring =~ /pattern/  --same as--> $inputstring =~ m/pattern/
+
+ $inputstring =~ 's/oldpattern/replacedstring/';
+		    
+ tr operator 
+ -----------
+  |-> translates char by char
+
+ Syntax:-
+ ----------
+ tr /oldpattern/replacementchars/
+ 
+ $inputstring =~ tr /oldpattern/replacementchars/;
+
+
+ in shellscript grep command -- in perl script =~ !~
+
+  		sed command substitute - in perl  s/old/new/
+		|
+		awk command -- in perl split(Regx,"$inputString")
+ 
+------------------------------------------------------------------------------------------------
+ 
+ Complex DS 
+ |
+ package 
+ |
+ module 
+
+--------------------------------------------------------------------------------------------------
+ Array & Hash
+ ============== 
+
+ Array of Array
+ Array of Hash
+
+ Hash of Array
+ Hash of Hash 
+ 
+ recap - reference 
+ -----
+
+ @a=("D1","D2","D3");
+
+ $r1=\@a;
+     ---
+
+ Array of Array
+ -----    =====
+  |	   |
+  |	 unnamedArray
+ namedArray
+ 
+  @Aoa=([],[],[],[],[]);
+	
+  @A=(["D1","D2"],[1,2,3,4,5,6,7,8,9],[100,200,300,10,20,30]);
+                 |                   |
+       0th-index |	1st-index    |	   2nd-index
+ 	  	 |		     |
+
+  print scalar(@A); -> 3
+
+  print $A[0]; -> ARRAY(0x2345)
+
+  print $A[1]; -> ARRAY(0x3323)
+
+  @a=@$A[0];
+   |
+   |->D1 D2
+
+  $r=@$A[1];
+  @$r;
+   |
+   |->1,2,3,4,5,6,7,8,9
+
+  ----------------------------------------------------------------------------------
+
+  hash - key => value //data
+
+
+  %h=("K1" =>"V1","K2" =>"V2");
+
+  @a=(%h) -> K1 V1 K2 V2
+
+  @a=({}) # array of hash
+
+  @a=({"K1"=>"V1","K2"=>"V2"},{"port"=>5000,"app"=>"flask"}); # array of hash
+     
+  size of array is - 2
+
+   print $a[0] -> HASH(0x34343)
+	
+   print $a[1] -> HASH(0x34223)
+  
+  print Dumper($a[1]) (or) print Dumper(@a);
+
+
+ -----------------------------------------------------------------------------------
+
+	%emp=(eid=>'E123',ename =>'Mr.ABC',edept =>'sales'); <== namedhash-structure 
+
+	1 to 1 
+             
+
+
+	1 to many
+	     -----
+	      @ %
+	      | |
+	      | {}
+	     []
+
+	Hash of Array
+	----   ======
+	 |	 |
+	 |     unnamed 
+	named
+
+ %emp=(eid =>['E123','E345','E213'],ename =>['Mr.ABC','Mr.X','Ms.Y'],edept=>['admin','prod','HR']);
+		
+ $emp{"eid"} ->ARRAY(0x34545)
+
+  $r1=$emp{"eid"}
+  ----
+   |_ @$r1 ->E123 E345 E213 //list of values
+
+ $emp{"eid"}[0]		Vs  $a[1]{"IP"}
+      ------===		    ----- ======
+	|			 |
+   Hash of Array		Array of Hash
+
+
+
+  %h=(K1 =>{}); <== Hash of Hash
+
+   %h=(K1 =>100,K2 =>200,K1 =>300); - 1D
+			 ---------
+			   |- duplicate key - overwrite existing key
+
+   print Dumper(\%h); -> {K2 => 200,
+			  K1 => 300
+			 };
+
+
+   %h=(K1 =>{K1 =>100,K2 =>200,K3 =>300},K2 =>{DB1 =>oracle,DB2=>sqlite3},K3=>{K1 =>10,K2=>20,K3=>30});
+       --    __       __       __	 --    ___          ___		  --   __      __     __
+
+
+
+   $h{OuterKey}{InnerKey}
+   
+
+   $h{K1} => HASH(0x13443)
+		
+   $h{K1}{K1} -> 100
+      --  ---
+      |   |
+      |  nestedKey
+      |
+    outerkey
+
+   $h{K1}{K1}  -> 100 
+  
+   $h{K1}{K2}  -> 200
+   
+   $h{K1}{K3}  -> 300
+   
+   $h{K3}{K1}  -> 10
+   $h{K3}{K2}  -> 20
+   $h{K3}{K3}  -> 30
+
+
+   $h{K2}{DB1} ->oracle
+
+ ----------------------------------------------------------------------------------------------------
+ 
+ echo "ONE"
+# sadfsdafsf
+# sadfasfsda
+# asdfdsfsdfsdf
+echo "TWO"
+uptime # display cpu LB
+echo # empty line
+# sadfsadfdsa
+# fasdfasfasd
+echo "---------------"
+
+
+ step 1: read a input script file
+ |
+ step 2: delete all the comment lines
+ |
+ step 3: delete all empty lines
+ |
+ step 4: create a newfile - write data to file (ex:p1.sh)
+ |
+ step 5: execute p1.sh script - create a newfile/write datato FILE 
+							      ----
+								|
+				pass result file from commandline args
+				do - commandline validation
+				   - result file must be a newfile.
+ 
+
+
+ ---------------------------------------------------------------------------------------------------
+
+
+
+ @A1=([],[],[]); # Array of Array
+
+ @A2=({},{},{}); # Array of Hash
+
+ %h1=(Key1 =>[],Key2 =>[]); # Hash of Array
+
+ %h2=(Key1 =>{},Key2 =>{]); # Hash of Hash 
+ 
+ -- <------------------->
+ |  	  |
+ |	 unnamed 
+ |
+ namedVariable
+ 
+ print Dumper(\@A1); [ [],[],[],[] ]
+
+ print Dumper(\@A2); [ {},{},{},{} ]
+
+ print Dumper(\%h1); { Key1 =>[],Key2=>[] }
+
+ print Dumper(\%h2); { Key1=>{},Key2=>{}} 
+
+
+ print 'Hello'; -> print q Hello;
+ 
+ print "Hello"; -> print qq Hello;
+ 
+ @a=("D1","D2"); -> @a=qw(D1,D2);
+                       --
+
+		    @a=qw(D1,
+		    D2,
+		    D3);
+
+ 
+ $$dbd_prefix_registry{csv_}{class}
+ $$dbd_prefix_registry{go_}{class}
+
+ =====================================================================================================
+
+ netinfo
+ --------
+	interface=eth0
+	onboot=yes
+	bootproto=dhcp
+	defroute=yes
+	doamin=example.com
+	DNS1="133.44.56.43"
+
+ hash of hash of array of hash 
+ -----
+ hash of array ... ...  
+ ................
+
+ add new property 
+ modify existing property
+ fetch particular attribute
+
+ use Data::Dumper;
+
+%netinfo1=(interface =>"eth0",onboot =>"yes",bootproto =>dhcp);
+
+#print $netinfo1{"interface"},"\n"; # will get single value from netinfo1 hash
+
+$netinfo1{"doamin"}="example.com"; # add new data 
+
+$netinfo1{"interface"}="eth1"; # modification
+
+#print Dumper(%netinfo1);
+=begin
+%netinfo2=(K1 =>{"interface" =>["eth0"],"onboot" =>["Yes","No"]});
+
+print $netinfo2{K1}{interface}[0],"\n";
+print $netinfo2{K1}{onboot}[0],"\n";
+print Dumper(%netinfo2);
+=cut
+$r={interface =>["eth0"],onboot =>["Yes","no"],bootproto => [dhcp,static]};
+
+print $$r{"interface"}[0],"\n";
+print Dumper($r),"\n";
+=cut
+$r={interface =>{interface =>["eth0"]},onboot =>{onboot =>["yes","no"]}};
+print "=> ",$$r{interface}{interface}[0],"\n";
+print Dumper($r),"\n";
+
+=====================================================================================================
+
+ recap
+ -----
+
+  @a=();	Vs	$r=[]
+   |			 |
+ namedArray  		anonymous array(ARRAY-reference)
+
+  %h=();	Vs	$r={}
+   |			|
+  namedHash		anonymous hash(HASH-reference)
+ 
+ 
+ anonymous function (or) unnamed function
+ ------------------	------------------
+
+
+
+
+sub functionName{		sub{
+	code block	Vs	  Codeblock
+}				};
+ ----------------		---------
+  //namedFunction		unnamedFunction - subroutine reference 
+
+				$r=sub{
+				....
+				...
+				};
+				
+				&$r; # calling anonymous block (de-reference)
+
+
+
+
+
+
+
+
+
+
+ open(FH,"emp.csv");
+=begin
+while(<FH>){
+        print "$_";
+}
+close(FH);
+=cut
+
+$r1=\*FH;
+print $r1,"\t",ref($r1),"\n";
+
+sleep 3;
+
+print <$r1>;
+
+	SCALAR 
+	ARRAY
+	HASH	
+	REF  - ref of exisiting ref variable
+	CODE - subroutine
+	GLOB - fileHandler
+	
+ ----------------------------------------------------------------------------------------------
+ package
+ -------
+  - collection of perl data types and subroutines
+  |
+  - overload - same subroutine /datastrucute
+  |
+  - by default package name is main
+			       ----
+  |
+  -  __PACKAGE__  = display package name
+
+  Syntax:-
+  ----------
+  package packagename;
+
+	$var=Value;
+	@arr=(list of items);
+	%h=(......);
+	$ar=[];
+	$ah={};
+	sub f1{
+	}
+	$r=sub{
+	
+	};
+	..
+	..
+	..
+ -------------------------------------------------------------------------
+  
+	
+ BEGIN{ initialization block }
+	
+ END{ post script block }
+		 
+
+ ------------------------------------------------------------------------
+
+
+ perl module 
+	- perl script file 
+	- filename extension is .pm
+				----
+
+	- code reuse (or) code reusability 
+	
+	- create a package - package name is same as file name
+
+	  ex: package Fax;  - filename: Fax.pm
+			                ======
+
+	- to import external perl module code into local script - use <modulename>
+
+	  use Fax; # not extension 
+
+	  Fax::member
+
+	- at the end of the perl module file - bool status must be true
+	
+	  1;
+
+     @INC - Array - pre-defined array - perl refer our perl module file 
+     ====	
+
+     BEGIN{
+	push(@INC,"<remotepath>");
+     }
+
+	(or)
+
+     use lib <remotepath>
+
+	(or)
+	
+     PERL5LIB=<remotepath> <== inside .bashrc (or) env variable 
+
+ -----------------------------------------------------------------------------------------------
