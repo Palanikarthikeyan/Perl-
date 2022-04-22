@@ -1,0 +1,558 @@
+ Recap
+ -----
+ package - collection of variables/subroutines
+	 - namespace - overload datamember
+	 - packagename::function
+	 - $packagename::scalarvariable
+	   @packagename::arrayVariable
+	   %packagename::hashvariable
+	   
+
+ |
+ perl module
+ ------------
+   - loadable (or) runnable file
+	
+   - filename.pm <==(perlmodule)
+
+   - package <packagename>;
+	....
+	....
+   - packagename and filename must be same
+
+   - at the end of every module end - 1 (bool value)
+					
+
+ use <modulename>
+
+ |->perl search modulename - location/directory - refer @INC Array
+
+   if module directory path is not exists - how to add module path into existing array?
+
+	push(@INC,"module-dir-path");
+
+		(or)
+
+	use lib <module-dir-path>
+
+		(or)
+	update - env variable - PERL5LIB
+
+  ------------------------------------------------------------------------------------------------
+
+  object oriented programming
+  ---------------------------
+  |
+ 		in perl
+
+ class   -	package 
+  |
+ object  -	reference
+  |
+ method	 - 	subroutine 
+
+
+ package Pkname;
+ ...
+ ...
+
+ reference => [] {} sub{} ..
+
+
+ method => sub function{
+
+	   }
+
+ 
+ constructor - specialmethod - object
+				|
+				object->call_other_member
+
+ package Pkname;
+
+ sub display{
+	$r={};	<== constructor 
+ }
+ sub method1{
+	...	<== non-constructor
+ }
+ sub method2{ 
+	...     <== non-constructor
+ }
+ sub method3{
+	...     <== non-constructor
+ }
+
+ 
+	+---------------+
+	|[ ]  |  | []	|
+	|	  white	|	<== blueprint sheet - class - package 
+	+---------------+
+	 |  |	|  .. |
+	 |  |	|     |
+	B1  B2  B3    Bn <== object - reference 
+	 |  |   |      |
+ 	 | 2nd  |      4thblk <==address - memory
+      1st      3rdblk
+	
+	|   |     |   ..   | 
+       B1   B2    B3       Bn
+     white white  white   white
+	|   |     |
+	|  Green  blue
+     yellow
+
+
+
+
+
+
+
+     cat -n p4 
+
+     1	$fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+
+     2	print $fsinfo,"\n"; =>HASH(0x1234)
+
+     3	print $$fsinfo{fstype},"\n"; # De-reference ->ext4
+
+     4	print $fsinfo->{fstype},"\n"; # using -> operator de-reference ->ext4
+
+     5	$fsinfo->{fstype}="xfs"; # we can modify existing structure like in C *p=123;//OK ; p=123;//Error
+
+     6	print $fsinfo->{fstype},"\n"; ->xfs
+
+     --------------------------------------------------------------------
+
+    apelix@krosumlabs:~$ cat -n p5 
+     1	package box;
+
+     2	$fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+
+     3	package main;
+
+     4	print $box::fsinfo,"\n";
+
+     5	print $$box::fsinfo{fstype},"\n";
+
+     6	print $box::fsinfo->{fstype},"\n";
+
+     7	$box::fsinfo->{fstype}="xfs"; # we can modify existing structure
+
+     8	print $box::fsinfo->{fstype},"\n";
+
+     --------------------------------------------------------------------
+     apelix@krosumlabs:~$ cat -n p6 
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  print "\$fsinfo:$fsinfo\n\n"; # HASH(0x1234)
+     5	  return $fsinfo;
+     6	}
+     7	package main;
+     8	$r=box::f1();
+     9	print "\$r:$r\n"; # HASH(0x1234) 
+     --------------------------------------------------------------------
+     apelix@krosumlabs:~$ cat -n p7  # $r and $fsinfo both are same(Address)
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  return $fsinfo;
+     5	}
+     6	
+     7	package main;
+     8	$r=box::f1();
+     9	print $$r{fstype},"\n";
+    10	print $r->{fstype},"\n";
+    11	$r->{fstype}="xfs"; # we can modify existing key
+    12	print $r->{fstype},"\n";	
+    ------------------------------------------------------------------------
+
+     +-----------+
+     |	box	 |
+     +-----------+
+	|     |
+       r1    r2  <== r1 address is unique and r2 address is unique //each object own state(address)
+
+	cat -n p8 
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  return $fsinfo;
+     5	}
+     6	
+     7	package main;
+     8	$r1=box::f1();
+     9	print "default fstype is:$r1->{fstype}\n";
+    10	$r1->{fstype}="xfs"; # we can modify existing key
+    11	print "fstype is:$r1->{fstype}\n\n";
+    12	
+    13	$r2=box::f1();
+    14	print "default fstype is:$r2->{fstype}\n";
+    15	$r2->{fstype}="btrfs"; # we can modify existing key
+    16	print "fstype is:$r2->{fstype}\n";
+
+   -----------------------------------------------------------------------------------------------
+	apelix@krosumlabs:~$ cat -n p10
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  return $fsinfo;
+     5	}
+     6	sub f2{
+     7		($r1,$v)=@_; # from array to list # $r1=shift(@_);
+     8		print "default fstype is:$r1->{fstype}\n";
+     9		$r1->{fstype}="$v"; # we can modify existing key
+    10		print "fstype is:$r1->{fstype}\n";
+    11	}
+    12	package main;
+    13	$r1=box::f1();
+    14	#$r1->f2(); # we can't call - $r1 is not a blessed reference
+    15	box::f2($r1,"xfs");
+    16	
+    17	$r2=box::f1();
+    18	box::f2($r2,"btrfs");
+
+
+   ----------------------------------------------------------------------------------------
+
+   apelix@krosumlabs:~$ cat -n p11 
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  return bless($fsinfo); <===
+     5	}
+     6	sub f2{
+     7		($r1,$v)=@_; # from array to list # $r1=shift(@_);
+     8		print "default fstype is:$r1->{fstype}\n";
+     9		$r1->{fstype}="$v"; # we can modify existing key
+    10		print "fstype is:$r1->{fstype}\n";
+    11	}
+    12	package main;
+    13	$r1=box::f1();
+    14	$r1->f2("xfs"); # f2($r1,"xfs") 
+    15	
+    16	$r2=box::f1();
+    17	$r2->f2("btrfs"); # f2($r2,"btrfs")
+
+   # box is a class
+   # $r1 is an object1 
+   # $r2 is an another object2
+   # .. 
+   # $rn - we can create n no.of object - each object having own memory/address
+   #
+   # 
+   -----------------------------------------------------------------------
+
+  cat -n box.pm <== perl module
+     1	package box;
+     2	sub f1{
+     3	  $fsinfo={fstype =>"ext4",fmount =>"/mnt",fpart => ""};
+     4	  return bless($fsinfo);
+     5	}
+     6	sub f2{
+     7		($r1,$v)=@_; # from array to list # $r1=shift(@_);
+     8		print "default fstype is:$r1->{fstype}\n";
+     9		$r1->{fstype}="$v"; # we can modify existing key
+    10		print "fstype is:$r1->{fstype}\n";
+    11	}
+    12	1;
+  ---------------------------------------------------------------------
+
+     1  use box;
+     2	$r1=box::f1();
+     3	$r1->f2("xfs"); # f2($r1,"xfs") 
+     4	
+     5	$r2=box::f1();
+     6	$r2->f2("btrfs"); # f2($r2,"btrfs")
+
+  -------------------------------------------------------------------------
+  inheritance
+  -----------
+     - in oops - inheritance - reusability
+
+	P1 (parent)
+         |
+	 |
+	P2 (child)
+	     |
+	    object - we can call parent attributes
+
+	P
+	| is-A => @ISA=(parentname);
+	C	  -----------------
+
+
+	file: box.pm			file: p1.pl
+	------------------		-----------
+	use Emp;			use box;
+					box::new()//Error 
+	package box;
+	$obj=Emp::new();
+	$obj->display();
+	sub fx{
+
+	}
+	1;
+	------------------	
+
+
+	file: box.pm	
+	-------------
+	use Emp;
+	package box;				file:p2.pl
+	@ISA=(Emp);  # Emp - parent class	-----------
+	...	     # |			use box;
+	...	     # box - child class	$obj=box::new(); # //OK
+						$obj->fx();
+						$obj->display();
+						$obj->update("Admin");
+						
+ ------------------------------------------------------------------------------------------------------
+	installing perl module manually
+	-------------------------------
+	wget module.tar.gz
+
+	tar -xzf module.tar.gz
+
+   	cd module
+
+	perl Makefile.PL 
+	make
+	make test
+	make install 
+
+		(or)
+	perl Build.PL
+	perl Build
+	perl Build test
+	perl Build install
+
+	# installing perl module automatically
+	# ---------------------------------------
+	root@host~]# cpan install DBI
+
+		(or)
+	
+	root@host~]# perl -MCPAN -e shell 
+	cpan[1]> install DBI
+	
+		(or)
+	root@host~]# perl -MCPAN -e 'CPAN::install(DBI)'
+
+------------------------------------------------------------------------------------------------------
+
+ $app={service => '',port =>'',version=>'',user =>''}
+
+
+ app-1			app-2			... app-N.
+  ->service: apache2	->service: httpd
+  ->port: 8080		->port: 8080
+  ->version: 1.0	->version:1.2
+  ->user: userA		->user: userB
+	|			|
+	
+  do initialization - use constructor
+   |
+  display app details
+   |
+  update port number
+   |
+  display updated port number
+   |
+  create a file - append operation - append all the service details - common file
+  
+----------------------------------------------------------------------------------------------------
+
+
+
+ %d=(service =>"flask", port =>5000);
+
+ $d{service}="Django"; 
+ $d{service}="httpd";
+ $d{service}="prometheus";
+ $d{service}="apache2";
+
+
+ print Dumper(\%d); { service => 'apache2',
+		      port =>5000
+		    }
+
+ %serverinfo=(server=>"defaultserver");  Vs  %serverinfo=(server =>["defaultserver"]);
+
+  $serverinfo{"server"}="unix";		      $serverinfo{server}; ARRAY(0x333)
+  $serverinfo{"server"}="Linux";	      $r1=$serverinfo{server};		
+  $serverinfo{"server"}="sunos";	      @a=@$r1;
+					      push(@a,"unix");
+  print $serverinfo{"server"} -> sunos 	      push(@a,"Linux");
+					      push(@a,"sunos");
+
+					      $serverinfo{server}->[0] =>defaultserver
+					      $serverinfo{server}->[1] =>unix
+					      $serverinfo{server}->[2] =>Linux
+
+  package Pk;
+  sub f1{
+      ($class)=@_;
+      $serverinfo={server=>"Defaultserver"};
+      return bless($serverinfo);
+  }
+
+  package main;
+
+  $obj1=Pk->f1();
+
+  $obj1{server}="unix";
+
+  $obj2=Pk->f1();
+      
+  $obj2{server}="Linux";
+
+  $obj3=Pk->f1();
+
+  $obj3{server}="Sunos";
+-------------------------------------------------------------------------------------------------------
+	
+	perl - DB
+
+
+
+ perl					DBI		DB
+ -----					|		---
+ function()+perlDS			|		SQL
+				
+ $var="insert into table....."; ---->   -  DBD -DBE
+ ---- |----------------------|				select *from table;
+ 							 |
+		-----<---------------------------------
+  ....
+ 
+          $sth = $dbh->prepare("INSERT INTO table(foo,bar,baz) VALUES (?,?,?)");
+
+         while(<CSV>) {
+           chomp;
+           my ($foo,$bar,$baz) = split /,/;
+               $sth->execute( $foo, $bar, $baz );
+         }
+
+
+ [Keyboard]------------perl------------------[Monitor]
+			|
+			|
+		    |---------|
+		    |	      |
+		  FILE       DBI
+
+  $_='foo,bar,baz'; 
+
+  (foo,bar,baz)=split(",");
+   ------------
+	|
+	|
+       $sth->execute(....)
+  
+ ---------------------------------------------------------------------------------------------------
+ perldoc <module> # module docs 
+
+ perldoc -m <module> # source code
+----------------------------------------------------------------------------------------------------
+ CGI
+ ----
+
+ 
+ [Keyboard]------------perl------------------[Monitor]
+		       |      |
+         web __________|      |
+		    |---------|
+		    |	      |
+		  FILE       DBI
+
+
+ broswer // <html>...</html>
+
+  open a brower  -> ...html form --------webserver ------------perl script in hash format
+										....
+
+				---------<-----------------------------
+					<html>...</html>
+
+
+  								print("Hello");
+ <h1><font color=green>"Hello"</font></h1>
+ -------------------------------------------
+						Content-type:text/html
+						....
+						....
+						....
+		
+     Client -------->--------request----->-----webserver---->-------serverscript//hashformat(key=>Value)
+									|
+									...
+									...
+									|
+			------------<------------------------------
+						Content-type:text/html
+	...	
+
+ install webserver 
+  |
+  configure webserver 
+	------------
+		|-1.client file configuration - ex:login.html index.html file.html
+		|-2.serverscript file - ex:p1.pl p2.pl
+		Script Alias /cgi-bin/ /var/www/cgi-bin/
+				|       =================
+				|
+
+  |
+ server script code 
+  |
+ open a broswer => type IPAddress/cgi-bin/serverScript
+			--------------------------------
+
+  
+  |
+ open a broswer => type IPAddress/file.html
+ 
+
+	web --------perl------------DB
+	|
+	--- ---------------------------
+	...	
+ -------------------------------------------------------------------------------------------------
+ use module;
+
+ $obj=module ->function(arg1,args,[],{});
+ $v=$obj->method1();
+ @v
+ %h
+ $r
+ 1 (or) 0 - bool
+ undef
+
+ use module;
+
+ $r=module::function(....);
+ $r->fx();
+ 
+ $r::fx();
+ 
+ $r{'key'}->[index]
+
+ $r{'key'}{'key'}[index]->{"Key"}="v";
+ .........................//Complex DS
+
+ -------------------------------------------------------------------------------------------------
+
+ 
+
+
+
+
+
+
+
+
+
+
+
